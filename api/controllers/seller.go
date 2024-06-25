@@ -20,7 +20,7 @@ func GetSellers(c *gin.Context) {
 
 // GetSeller retrieves a seller by ID
 func GetSeller(c *gin.Context) {
-	log.Print(">>>>>>>>>>>")
+	log.Print("[Seller] - getting seller by id")
 	id, _ := strconv.Atoi(c.Param("id"))
 	var seller models.Seller
 	if err := database.DB.First(&seller, id).Error; err != nil {
@@ -37,7 +37,16 @@ func CreateSeller(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	database.DB.Create(&seller)
+
+	if err := models.ValidateDataSeller(&seller); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error()})
+		return
+	}
+	if err := database.DB.Create(&seller).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
 	c.JSON(http.StatusOK, seller)
 }
 

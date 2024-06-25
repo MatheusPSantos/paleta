@@ -20,5 +20,5 @@ func ConnectDatabase() {
 	if err != nil {
 		log.Printf("[Database]: %+v", err.Error())
 	}
-	DB.AutoMigrate(&models.Seller{})
+	DB.AutoMigrate(&models.Seller{}, models.Address{})
 }
