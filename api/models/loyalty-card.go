@@ -7,9 +7,9 @@ import (
 
 type LoyaltyCard struct {
 	gorm.Model
-	Title       string       `json:"title" validate:"nonzero"`
-	Layout      string       `json:"layout" validate:"nonzero"`
-	TypeLoyalty *TypeLoyalty `json:"type_loyalty" validate:"nonzero" gorm:"foreignkey:LoyaltyCardID;association_foreignkey:ID"`
+	Title    string `json:"title" validate:"nonzero"`
+	Layout   string `json:"layout" validate:"nonzero"`
+	IsActive bool   `json:"is_active" validate:"nonzero"`
 }
 
 func ValidateDataLoyaltyCard(loyaltyCard *LoyaltyCard) error {
