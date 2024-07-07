@@ -10,5 +10,5 @@ func main() {
 	log.Println("Starting api application...")
 	database.ConnectDatabase()
 	r:= routes.SetupRouter()
-	r.Run(":8080")
+	r.Run(":8888")
 }

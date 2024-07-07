@@ -10,7 +10,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// GetSellers retrieves all sellers
 func GetSellers(c *gin.Context) {
 	log.Print("Getting sellers")
 	var sellers []models.Seller
@@ -18,7 +17,6 @@ func GetSellers(c *gin.Context) {
 	c.JSON(http.StatusOK, sellers)
 }
 
-// GetSeller retrieves a seller by ID
 func GetSeller(c *gin.Context) {
 	log.Print("[Seller] - getting seller by id")
 	id, _ := strconv.Atoi(c.Param("id"))
@@ -30,7 +28,6 @@ func GetSeller(c *gin.Context) {
 	c.JSON(http.StatusOK, seller)
 }
 
-// CreateSeller creates a new seller
 func CreateSeller(c *gin.Context) {
 	var seller models.Seller
 	if err := c.ShouldBindJSON(&seller); err != nil {
@@ -50,7 +47,6 @@ func CreateSeller(c *gin.Context) {
 	c.JSON(http.StatusOK, seller)
 }
 
-// UpdateSeller updates an existing seller
 func UpdateSeller(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	var seller models.Seller
@@ -68,7 +64,6 @@ func UpdateSeller(c *gin.Context) {
 	c.JSON(http.StatusOK, seller)
 }
 
-// DeleteSeller deletes a seller
 func DeleteSeller(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	if err := database.DB.Delete(&models.Seller{}, id).Error; err != nil {
@@ -76,4 +71,15 @@ func DeleteSeller(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"message": "Seller deleted"})
+}
+
+func GetSellerAddress(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Param("id"))
+	var address models.Address
+	if err := database.DB.First(&address, "seller_id = ?", id).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Address not found"})
+		println(err.Error())
+		return
+	}
+	c.JSON(http.StatusOK, address)
 }
