@@ -7,8 +7,7 @@ import (
 
 type Address struct {
 	gorm.Model
-	UserID uint `json:"seller_id"` // foreign key
-
+	UserID     uint   `json:"user_id"` // foreign key
 	Street     string `json:"street" validate:"nonzero"`
 	City       string `json:"city" validate:"nonzero"`
 	ZipCode    string `json:"zip_code" validate:"nonzero"`
