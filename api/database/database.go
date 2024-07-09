@@ -21,8 +21,7 @@ func ConnectDatabase() {
 		log.Printf("[Database]: %+v", err.Error())
 	}
 	DB.AutoMigrate(
-		&models.Seller{},
-		models.Customer{},
+		models.User{},
 		models.LoyaltyCard{},
 		models.LoyaltyPoints{},
 		models.LoyaltyQuantity{},

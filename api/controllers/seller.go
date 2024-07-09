@@ -21,7 +21,7 @@ func GetSeller(c *gin.Context) {
 	log.Print("[Seller] - getting seller by id")
 	id, _ := strconv.Atoi(c.Param("id"))
 	var seller models.Seller
-	if err := database.DB.First(&seller, id).Error; err != nil {
+	if err := database.DB.Select("id", "created_at", "updated_at", "deleted_at", "name", "email", "phone", "cpf_cnpj").First(&seller, id).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Seller not found"})
 		return
 	}
