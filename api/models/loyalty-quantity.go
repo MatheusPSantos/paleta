@@ -7,9 +7,9 @@ import (
 
 type LoyaltyQuantity struct {
 	gorm.Model
-	Quantity      uint        `json:"quantity" validate:"nonzero"`
-	LoyaltyCardID uint        `json:"loyalty_card_id"` // foreing key
-	LoyaltyCard   LoyaltyCard `gorm:"foreignkey:LoyaltyCardID"`
+	Quantity          uint            `json:"quantity" validate:"nonzero"`
+	LoyaltyCampaingID uint            `json:"loyalty_card_id"` // foreing key
+	LoyaltyCampaing   LoyaltyCampaing `gorm:"foreignkey:LoyaltyCampaingID"`
 }
 
 func ValidateDataLoyaltyQuantity(loyaltyQuantity *LoyaltyQuantity) error {

@@ -24,9 +24,10 @@ func ConnectDatabase() {
 
 	DB.AutoMigrate(
 		&models.User{},
-		&models.LoyaltyCard{},
+		&models.LoyaltyCampaing{},
 		&models.LoyaltyPoints{},
 		&models.LoyaltyQuantity{},
 		&models.Address{},
+		&models.UserLoyalty{},
 	)
 }
