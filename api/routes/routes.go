@@ -32,7 +32,9 @@ func SetupRouter() *gin.Engine {
 	r.DELETE("/users/:id/address/:addressId", controllers.DeleteUserAddress)
 	/** Loyalty **/
 	r.POST("/loyalty/campaing", controllers.CreateLoyaltyCampaing)
-	r.GET("/loyalty/:id_loyalty/campaings", controllers.ListSellerLoyaltyCampaings)
-
+	r.GET("/loyalty/seller/:id/campaings", controllers.ListSellerLoyaltyCampaings)
+	// r.GET("/loyalty/seller/:id/campaings/:campaingId", controllers.GetSellerLoyaltyCampaingById)
+	// r.GET("/loyalty/customer/:id/campaings", controllers.ListCustomerLoyaltyCampaings)
+	// r.GET("/loyalty/customer/:id/campaings/:campaingId", controllers.GetCustomerLoyaltyCampaingById)
 	return r
 }
