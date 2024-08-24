@@ -13,6 +13,8 @@ func SetupRouter() *gin.Engine {
 	r := gin.Default()
 	r.GET("/ping", func(c *gin.Context) { c.String(http.StatusOK, "pong") })
 
+	/** Authentication */
+	r.POST("/login", controllers.Login)
 	/** Seller */
 	r.GET("/sellers", controllers.GetSellers)
 	r.GET("/sellers/:id", controllers.GetSeller)
@@ -32,7 +34,7 @@ func SetupRouter() *gin.Engine {
 	r.DELETE("/users/:id/address/:addressId", controllers.DeleteUserAddress)
 	/** Loyalty **/
 	r.POST("/loyalty/campaing", controllers.CreateLoyaltyCampaing)
-	r.GET("/loyalty/seller/:id/campaings", controllers.ListSellerLoyaltyCampaings)
+	// r.GET("/loyalty/seller/:id/campaings", controllers.ListSellerLoyaltyCampaings)
 	// r.GET("/loyalty/seller/:id/campaings/:campaingId", controllers.GetSellerLoyaltyCampaingById)
 	// r.GET("/loyalty/customer/:id/campaings", controllers.ListCustomerLoyaltyCampaings)
 	// r.GET("/loyalty/customer/:id/campaings/:campaingId", controllers.GetCustomerLoyaltyCampaingById)

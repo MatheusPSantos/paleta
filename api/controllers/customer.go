@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	"paleta-api/database"
 	"paleta-api/models"
@@ -11,9 +12,19 @@ import (
 
 func CreateCustomer(c *gin.Context) {
 	var customer models.User
+	var auth models.Authentication
+
+	var input struct {
+		Password string `json:"password"`
+	}
 
 	if err := c.ShouldBindJSON(&customer); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	// extrai a senha do json
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Password not provided"})
 		return
 	}
 
@@ -27,8 +38,23 @@ func CreateCustomer(c *gin.Context) {
 		return
 	}
 
+	// criptografa senha
+	hashedPassword, err := models.HashPassword(input.Password)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to hash password"})
+		return
+	}
+
 	if err := database.DB.Create(&customer).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	// Criar o registro de autenticação associado
+	auth.UserID = customer.ID
+	auth.Password = hashedPassword
+
+	if err := database.DB.Create(&auth).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create authentication record"})
 		return
 	}
 

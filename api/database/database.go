@@ -29,5 +29,6 @@ func ConnectDatabase() {
 		&models.LoyaltyQuantity{},
 		&models.Address{},
 		&models.UserLoyalty{},
+		&models.Authentication{},
 	)
 }
